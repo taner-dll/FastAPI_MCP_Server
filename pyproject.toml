@@ -1,0 +1,21 @@
+[project]
+name = "fastapi-mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Taner Deliloglu", email = "tnrdll@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.141.1",
+    "mcp[cli]>=2.2.0",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[project.scripts]
+fastapi-mcp-server = "fastapi_mcp_server:main"
+
+[build-system]
+requires = ["uv_build>=0.11.18,<0.12.0"]
+build-backend = "uv_build"
