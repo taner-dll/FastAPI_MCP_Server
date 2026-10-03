@@ -167,6 +167,53 @@ Bu, endpoint'in bozuk olduğu anlamına gelmez. Tarayıcı bir MCP istemcisi de�
 ve gerekli başlangıç görüşmesini yapmadan normal HTTP isteği gönderir. MCP
 endpoint'i `ClientSession` gibi protokolü uygulayan bir istemciyle kullanılmalıdır.
 
+## VS Code'a MCP Server Ekleme
+
+VS Code, Streamable HTTP üzerinden çalışan MCP server'lara bağlanabilir. Önce
+Uvicorn server'ını çalıştırın:
+
+```powershell
+uv run uvicorn fastapi_mcp_server.main:app --reload
+```
+
+Ardından proje kökünde `.vscode/mcp.json` dosyasını oluşturun:
+
+```json
+{
+  "servers": {
+    "fastapiMcpServer": {
+      "type": "http",
+      "url": "http://127.0.0.1:8000/mcp/"
+    }
+  }
+}
+```
+
+VS Code içinde bağlantıyı etkinleştirmek için:
+
+1. `Ctrl+Shift+P` ile Command Palette'i açın.
+2. `MCP: List Servers` komutunu çalıştırın.
+3. `fastapiMcpServer` server'ını seçin.
+4. Gerekirse `Start` veya `Restart` komutunu çalıştırın.
+5. Chat görünümündeki tool seçiminden `add` aracını etkinleştirin.
+
+Agent modunda örnek kullanım:
+
+```text
+MCP add aracını kullanarak 18 ile 24'ü topla.
+```
+
+HTTP yapılandırması yalnızca VS Code'un çalışan server'a bağlanmasını sağlar;
+Uvicorn sürecini otomatik olarak başlatmaz. Bu nedenle geliştirme sırasında
+Uvicorn ayrı bir terminalde açık kalmalıdır.
+
+VS Code bir Dev Container, WSL veya SSH oturumu içinde çalışıyorsa
+`127.0.0.1`, yerel Windows makinesini değil ilgili uzak ortamı ifade edebilir.
+Bu durumda server adresinin o ortamdan erişilebilir olması gerekir.
+
+Daha fazla bilgi için [VS Code MCP yapılandırma referansına](https://code.visualstudio.com/docs/agents/reference/mcp-configuration)
+bakabilirsiniz.
+
 ## MCP Akışı
 
 ```text
